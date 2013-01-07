@@ -2,4 +2,5 @@ body{
 	overflow-x: hidden;
     overflow-y: auto;
     background: #000 url(/assets/images/me.png) center center no-repeat;
+    min-height: 768px;
 }
