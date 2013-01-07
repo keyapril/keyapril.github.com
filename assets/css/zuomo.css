@@ -1,0 +1,5 @@
+body{
+	overflow-x: hidden;
+    overflow-y: auto;
+    background: #000 url(/assets/img/me.png) center center no-repeat;
+}
