@@ -212,7 +212,7 @@ KISSY.add('components/luck/index', function(S, Brick,Node) {
             var self = this;
             $(document).on('keydown',self._bindKeyDown,self);
         },
-        _bindKeyDown:function(e){
+        _bindKeyDown:function(ev){
             var self = this,trigger = self.trigger;
             if(ev.keyCode == '32') {
                 if(trigger.attr('data-action') === 'start') {
