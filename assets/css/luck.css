@@ -101,3 +101,10 @@ ul li {
   color: #fff;
   background: #f60;
 }
+
+
+#wb_connect_btn{
+  position: absolute;
+  right: 0;
+  top: 5px;
+}
