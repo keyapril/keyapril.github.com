@@ -205,7 +205,6 @@ KISSY.add('components/luck/index', function(S, Brick,Node) {
             var self = this,trigger = self.trigger;
             trigger.attr('data-action', 'start')
             trigger.html(trigger.attr('data-text-start'))
-            self.stop();
             $(document).detach('keydown',self._bindKeyDown,self);
         },
 
