@@ -183,16 +183,20 @@ KISSY.add('components/luck/index', function(S, Brick,Node) {
     }
 
     return {
-
         users: [],
-
         init: function(data) {
             var self = this;
-            this.data = data
+            if(self.users.length>0){
+                self.stop();
+            }
+            $('#balls').empty();
+            $('#lucky-balls').empty();
+            this.data = data;
+            self.users = [];
+            self.luckyUser = null;
             S.each(data,function(o,id){
                 self.users.push(new User(id,o));
             })
-
             this._bindUI()
         },
 

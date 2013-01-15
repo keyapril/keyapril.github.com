@@ -45,15 +45,16 @@
         });
     }
     KISSY.ready(function(S){
-        WB2.anyWhere(function(W){
-            W.widget.connectButton({
-                id: "wb_connect_btn",
-                type: '3,2',
-                callback : {
-                    login:function(o){
-                        KISSY.use('node',function(S,Node){
-                            var btnParseUrl = S.one('#btnParseUrl'),
-                                txtWeiBoUrl = S.one('#txtWeiBoUrl');
+        KISSY.use('node',function(S,Node){
+            var btnParseUrl = S.one('#btnParseUrl'),
+            txtWeiBoUrl = S.one('#txtWeiBoUrl');
+            WB2.anyWhere(function(W){
+                W.widget.connectButton({
+                    id: "wb_connect_btn",
+                    type: '3,2',
+                    callback : {
+                        login:function(o){
+                            btnParseUrl.removeClass('btn-disabled');
                             btnParseUrl.on('click',function(){
                                 if(!btnParseUrl.hasClass('btn-disabled')){
                                     var url  = txtWeiBoUrl.val();
@@ -80,12 +81,13 @@
                                     });
                                 }
                             });
-                        });
-                    },
-                    logout:function(){
-                        alert('logout');
+                        },
+                        logout:function(){
+                            btnParseUrl.detach();
+                            btnParseUrl.addClass('btn-disabled');
+                        }
                     }
-                }
+                });
             });
         });
     });
