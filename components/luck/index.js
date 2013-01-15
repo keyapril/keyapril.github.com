@@ -190,9 +190,10 @@ KISSY.add('components/luck/index', function(S, Brick,Node) {
                 self.stop();
             }
             self.trigger = $('#go');
+
+            self._resetUI();
             $('#balls').empty();
             $('#lucky-balls').empty();
-            this.data = data;
             self.users = [];
             self.luckyUser = null;
             S.each(data,function(o,id){
