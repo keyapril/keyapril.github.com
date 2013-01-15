@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>转发微博抽奖</title>
+    <script src="http://a.tbcdn.cn/s/kissy/1.3.0/seed.js"></script>
+    <script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2059991429" type="text/javascript" charset="utf-8"></script>
+
+    <script src="http://a.tbcdn.cn/apps/e/brix/1.0/brix.js" bx-config="{componentsPath:'./',importsPath:'./'}"></script>
+
+    <link type="text/css" rel="stylesheet" href="http://a.tbcdn.cn/apps/e/brix/1.0/??brix-min.css,gallery/form/form.css" charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="assets/css/luck.css" charset="utf-8">
+    <script type="text/javascript">
+    var S = KISSY;
+    var users = {};
+
+
+    function getRepostUsers(W,id,page,count,callback){
+        W.parseCMD("/statuses/repost_timeline.json", function(sResult, bStatus){
+            if(bStatus&&!S.isEmptyObject(sResult)) {
+                var reposts = sResult['reposts'];
+                S.each(reposts,function(d,i){
+                    var user=d['user'];
+                    if(!users[user.id]){
+                        users[user.id] = {
+                            name :user.name,
+                            screen_name:user.screen_name,
+                            profile_image_url:user.profile_image_url
+                        }
+                    }
+                });
+                if(count*page>=sResult.total_number){
+                    callback();
+                }
+                else{
+                    page++;
+                    getRepostUsers(W,id,page,count,callback);
+                }
+            }
+        },{
+            id : id,
+            count:count
+        },{
+            method: 'get'
+        });
+    }
+    KISSY.ready(function(S){
+        WB2.login(function(){
+            WB2.anyWhere(function(W){
+                KISSY.use('node',function(S,Node){
+                    var btnParseUrl = S.one('#btnParseUrl'),
+                        txtWeiBoUrl = S.one('#txtWeiBoUrl');
+                    btnParseUrl.on('click',function(){
+                        if(!btnParseUrl.hasClass('btn-disabled')){
+                            var url  = txtWeiBoUrl.val();
+                            var mid = url.substr(url.lastIndexOf('/')+1);
+                            W.parseCMD("/statuses/queryid.json", function(sResult, bStatus){
+                                if(bStatus){
+                                    btnParseUrl.addClass('btn-disabled');
+                                    var id = sResult.id;
+                                    getRepostUsers(W,id,1,200,function(){
+                                        S.use('components/luck/',function(S,Luck){
+                                            Luck.init(users);
+                                        });
+                                    });
+                                }
+                                else{
+                                    alert('没有查询到相关的微博ID')
+                                }
+                            },{
+                                mid : mid,
+                                type: 1,
+                                isBase62:1
+                            },{
+                                method: 'get'
+                            });
+                        }
+                    });
+                });
+            });
+        });
+    });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <input id="txtWeiBoUrl" value="http://weibo.com/1644358851/zexHi80uZ" class="input" placeholder="输入要分析的微博地址"><a id="btnParseUrl" class="btn btn-size25">分析</a>
+    </div>
+    <button id="go" data-text-start="按空格开始" data-text-stop="按空格停止" data-action="start"></button>
+    <div id="container">
+        <ul id="balls">
+        </ul>
+        <ul id="lucky-balls">
+        </ul>
+    </div>
+</body>
+</html>

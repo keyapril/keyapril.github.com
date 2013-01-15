@@ -1,0 +1,103 @@
+body {
+  background: #eee;
+}
+
+ul li {
+  list-style: none;
+}
+.header {
+	width: 900px;
+	margin: 0px auto;
+	padding: 30px 0;
+}
+.header #txtWeiBoUrl{
+	vertical-align: middle;
+	margin: 0;
+	width: 780px;
+}
+
+.header #btnParseUrl{
+	vertical-align: middle;
+	margin-left: 15px;
+	text-decoration:none;
+}
+
+#go {
+  width: 200px;
+  height: 50px;
+  display: block;
+  margin: 0 auto;
+  font-size: 22px;
+  border: none;
+  background: none;
+  color: #999;
+}
+
+#container {
+  width: 900px;
+  margin: 10px auto;
+  position: relative;
+}
+#balls {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  height: 400px;
+}
+
+#balls li,
+#lucky-balls li {
+  position: absolute;
+  left: 420px;
+  top: 470px;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  font-size: 16px;
+  background: #333;
+  color: #ddd;
+  opacity: .5;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 30px;
+  word-break: keep-all;
+  cursor: pointer;
+}
+
+
+
+#balls li.selected {
+  color: #fff;
+  background: #f60;
+  font-size: 50px;
+  height: 200px;
+  width: 200px;
+  line-height: 100px;
+  border-radius: 100px;
+  -webkit-transition: 0.3s ease-in;
+  -webkit-transition-property: width, height, font;
+  z-index: 100;
+}
+#balls li.selected p{
+	line-height: 28px;
+	font-size: 28px;
+}
+#lucky-balls {
+  padding: 20px;
+  margin: 10px 0;
+  list-style: none;
+}
+
+#lucky-balls li {
+  position: relative;
+  left: auto !important;
+  top: auto !important;
+  width: 50px !important;
+  height: 50px !important;
+  float: left;
+  margin: 5px 10px;
+  font-weight: bold;
+  color: #fff;
+  background: #f60;
+}
