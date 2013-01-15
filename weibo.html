@@ -61,7 +61,7 @@
                                     var mid = url.substr(url.lastIndexOf('/')+1);
                                     W.parseCMD("/statuses/queryid.json", function(sResult, bStatus){
                                         if(bStatus){
-                                            btnParseUrl.addClass('btn-disabled');
+                                            //btnParseUrl.addClass('btn-disabled');
                                             var id = sResult.id;
                                             getRepostUsers(W,id,1,200,function(){
                                                 S.use('components/luck/',function(S,Luck){
