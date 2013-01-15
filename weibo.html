@@ -12,10 +12,9 @@
     <link type="text/css" rel="stylesheet" href="assets/css/luck.css" charset="utf-8">
     <script type="text/javascript">
     var S = KISSY;
-    var users = {};
 
 
-    function getRepostUsers(W,id,page,count,callback){
+    function getRepostUsers(W,users,id,page,count,callback){
         W.parseCMD("/statuses/repost_timeline.json", function(sResult, bStatus){
             if(bStatus&&!S.isEmptyObject(sResult)) {
                 var reposts = sResult['reposts'];
@@ -57,21 +56,29 @@
                             btnParseUrl.removeClass('btn-disabled');
                             btnParseUrl.on('click',function(){
                                 if(!btnParseUrl.hasClass('btn-disabled')){
+                                    btnParseUrl.html('分析中……');
+                                    btnParseUrl.addClass('btn-disabled');
                                     var url  = txtWeiBoUrl.val();
                                     var mid = url.substr(url.lastIndexOf('/')+1);
                                     W.parseCMD("/statuses/queryid.json", function(sResult, bStatus){
-                                        if(bStatus){
+                                        if(bStatus&&sResult.id!='-1'){
                                             //btnParseUrl.addClass('btn-disabled');
                                             var id = sResult.id;
-                                            getRepostUsers(W,id,1,200,function(){
+                                            var users = {};
+                                            getRepostUsers(W,users,id,1,200,function(){
+                                                btnParseUrl.html('分析');
+                                                btnParseUrl.removeClass('btn-disabled');
                                                 S.use('components/luck/',function(S,Luck){
                                                     Luck.init(users);
                                                 });
                                             });
                                         }
                                         else{
+                                            btnParseUrl.html('分析');
+                                            btnParseUrl.removeClass('btn-disabled');
                                             alert('没有查询到相关的微博ID')
                                         }
+                                        
                                     },{
                                         mid : mid,
                                         type: 1,
