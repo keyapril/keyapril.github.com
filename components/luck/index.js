@@ -189,6 +189,7 @@ KISSY.add('components/luck/index', function(S, Brick,Node) {
             if(self.users.length>0){
                 self.stop();
             }
+            self.trigger = $('#go');
             $('#balls').empty();
             $('#lucky-balls').empty();
             this.data = data;
@@ -196,67 +197,35 @@ KISSY.add('components/luck/index', function(S, Brick,Node) {
             self.luckyUser = null;
             S.each(data,function(o,id){
                 self.users.push(new User(id,o));
-            })
-            this._bindUI()
+            });
+            this._bindUI();
+        },
+        _resetUI:function(){
+            var self = this,trigger = self.trigger;
+            trigger.attr('data-action', 'start')
+            trigger.html(trigger.attr('data-text-start'))
+            self.stop();
+            $(document).detach('keydown',self._bindKeyDown,self);
         },
 
         _bindUI: function() {
-            var that = this
-
-            // bind button
-            var trigger = document.querySelector('#go')
-            trigger.innerHTML = trigger.getAttribute('data-text-start')
-            //trigger.addEventListener('click', go, false)
-
-                // bind #lucky-balls
-                /*$('#lucky-balls').delegate('click', 'li', function(e) {
-                    var el = $(e.target)
-                    var name = el.text()
-
-                    that.addItem(name)
-                    that.hit()
-                    el.remove()
-                })
-
-                // bind #balls
-                $('#balls').delegate('click', 'li', function(e) {
-                    var el = $(e.currentTarget)
-                    var name = el.one('p').text()
-
-                    for(var i = 0; i < that.users.length; i++) {
-                        var user = that.users[i]
-
-                        if(user.options.name === name) {
-                            that.moveLucky()
-                            if(that.luckyUser !== user) {
-                                that.setLucky(user)
-                            }
-                            break
-                        }
-                    }
-                })*/
-
-                // bind keydown
-                document.addEventListener('keydown', function(ev) {
-                    if(ev.keyCode == '32') {
-                        if(trigger.getAttribute('data-action') === 'start') {
-                            trigger.setAttribute('data-action', 'stop')
-                            trigger.innerHTML = trigger.getAttribute('data-text-stop')
-                            that.start()
-                        } else {
-                            trigger.setAttribute('data-action', 'start')
-                            trigger.innerHTML = trigger.getAttribute('data-text-start')
-                            that.stop()
-                        }
-                    } 
-                    /*else if(ev.keyCode == '27') {
-                        that.moveLucky()
-                        $('#lucky-balls li').eq(0).click()
-                    }*/
-                }, false)
-
+            var self = this;
+            $(document).on('keydown',self._bindKeyDown,self);
         },
-
+        _bindKeyDown:function(e){
+            var self = this,trigger = self.trigger;
+            if(ev.keyCode == '32') {
+                if(trigger.attr('data-action') === 'start') {
+                    trigger.attr('data-action', 'stop')
+                    trigger.html( trigger.attr('data-text-stop'))
+                    self.start()
+                } else {
+                    trigger.attr('data-action', 'start')
+                    trigger.html(trigger.attr('data-text-start'))
+                    self.stop()
+                }
+            } 
+        },
         start: function() {
             this.timer && clearTimeout(this.timer)
             this.moveLucky()
@@ -278,7 +247,6 @@ KISSY.add('components/luck/index', function(S, Brick,Node) {
                         z = user.zIndex
                     }
                 })
-
                 lucky.bang()
                 this.hit()
                 this.luckyUser = lucky
