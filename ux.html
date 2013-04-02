@@ -23,11 +23,9 @@
         <table>
             <tr>
                 {{#config}}
-                {{^if(index==0)}}
                 <td>
                     <a id="btn{{index}}" class="btn btn-red btn-xlarge {{^num}}btn-disabled{{/num}}">{{name}}{{#num}}({{num}}){{/num}}</a>
                 </td>
-                {{/if(index==0)}}
                 {{/config}}
             </tr>
         </table>

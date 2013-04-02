@@ -1,0 +1,155 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>淘宝城</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<link type="text/css" rel="stylesheet" href="http://a.tbcdn.cn/s/kissy/1.2.0/css/base-min.css" charset="utf-8">
+	<script type="text/javascript" src="http://a.tbcdn.cn/s/kissy/1.2.0/kissy-min.js"></script>
+	<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>-->
+	<script>
+		KISSY.config({
+			packages:[
+				{
+					name:"tbc",
+					tag:"20120110",
+					path:"./",
+					charset:"utf-8"
+				}
+			],
+			map:[
+				[/(.+tbc\/.+)-min.js(\?[^?]+)?$/, "$1.js$2"]
+			]
+		});
+	</script>
+	<style>
+		#map{
+			width:500px;
+			height:500px;
+			background-image:url('bg.jpg');
+			position:relative;
+			overflow:hidden;
+		}
+
+.list-item{float:left;width:174px;height:262px;zoom:1}
+.list-item-hover{height:304px !important;z-index:2}
+.list-item .wrap{border:1px solid #fff;padding:5px;position:relative;height:250px;width:162px;}
+.list-item h3.summary{width:160px;height:36px;overflow:hidden;font-size:12px;font-weight:400;position:absolute;top:204px;left:5px;text-overflow:ellipsis;color:#0063dc;z-index:999;}
+.list-item h3 a{word-break:break-all}
+.list-item h3 a:visited{color:#551A8B!important}
+.h, .H {color: #FF2900!important;position: static;}
+.ww-small{position:absolute;right:0;bottom:0;}
+
+.list-item .photo{border:1px solid #fff;width:160px;height:160px;}
+.list-item .photo a{width: 160px;
+height: 160px;text-decoration:none!important;outline:0;*font-size:140px;*font-family:Arial;vertical-align: middle;
+display: table-cell;
+*display:block;
+
+
+text-align: center;
+}
+.list-item .photo img{
+	vertical-align:middle;
+	
+}
+.list-item .attribute{overflow:hidden;height:60px;margin-top:10px;}
+
+.list-item-hover{_overflow:hidden;}
+.list-item-hover .wrap{border-color:#ddd;background-color:#f6f6f6;z-index:99;height:292px;}
+.list-item-hover .photo{border-color:#ddd;}
+.list-item-hover .attribute{height:120px;}
+.attribute li{height:20px;line-height:20px;padding:2px 0;width:162px;vertical-align:middle;}
+.attribute .price{}
+.attribute .price em{background-image:url(http://img03.taobaocdn.com/tps/i3/T1ebamXel5XXXXXXXX-20-2400.png);background-repeat:no-repeat;float:left;font: bold 16px Arial;color: #FF2900;padding-left: 16px;background-position: -5px -81px;margin-top:2px;}
+.attribute .price span{float:right;}
+.attribute .empty-summary{height:40px;}
+
+.attribute .shipment{}
+.attribute .shipment em{float:left}
+.attribute .shipment span{float:right;}
+.attribute .toplegend{height:26px;}
+.attribute .legend{height:20px;border:1px solid #dddddd;background-color:#fff;padding:2px 5px;}
+.legend a{vertical-align: middle;float: left;margin-right: 5px;overflow: hidden;}
+.legend a span {background-image:url(http://img03.taobaocdn.com/tps/i3/T1ebamXel5XXXXXXXX-20-2400.png);background-repeat:no-repeat;text-indent: -9999em;margin: 0;float:left;width: 18px;height: 20px;}
+.legend a.xb-as-fact span{background-position:-2px -489px}
+.legend a.xb-quality_item span{background-position:-2px -471px}
+.legend a.xb-sevenday-return span{background-position:-2px -509px}
+.legend a.xb-creditcard span{background-position:-3px -586px;}
+.legend a.xb-mall-icon span{background-image: url(http://img04.taobaocdn.com/tps/i4/T1xRWjXitCXXXXXXXX-260-720.png);background-position: 0 -603px;width: 25px;}
+.legend a.xb-jia1-pei3 span{background-position:-2px -529px}
+.legend a.xb-thunder-delivery span{background-position:-2px -549px}
+.legend a.xb-thirtyday-repair span{background-position:-2px -569px}
+.legend a.xb-thirdqc span{background-position:-2px -2368px}
+	</style>
+</head>
+<body>
+	<div id="map">
+	
+	</div>
+	<button id="mapmove">移动到随机位置</button>
+	<button id="mapzoomout">放大</button>
+	<button id="mapzoomin">缩小</button>
+	<button id="mapresize">容器大小</button>
+</body>
+<script>
+	KISSY.use('tbc/map,tbc/piclayer,tbc/zoomtip,tbc/point,tbc/photolayer',function(S,Map,MapPicLayer,ZoomTip,Point,PhotoLayer){
+		var map = new Map({container:'#map'});
+		/*var layer = new PhotoLayer({h:270,w:182});
+		//获取栅格图片数据z:级别
+		layer.getFileName=function(z,a,b){
+			return 'http://mt'+(Math.abs(a)%4)+'.google.cn/vt/lyrs=m@169000000&hl=zh-CN&gl=cn&x='+(a+100)+'&y='+(b+50)+'&z='+(7)+'&s=Galileo';
+			//return 'http://pics.xihubian.com/map/'+z+'/'+a+','+b+'.png';
+			//return 'http://pics.xihubian.com/map/'+z+'/'+a+','+b+'.png';
+			return 'http://cpic2.edushi.com/cn/hz/zh-chs/mappic/png'+z+'/'+a+','+b+'.png'
+		};*/
+		var layer = new MapPicLayer();
+		//获取栅格图片数据z:级别
+		layer.getFileName=function(z,a,b){
+			//return 'http://mt'+(Math.abs(a)%4)+'.google.cn/vt/lyrs=m@169000000&hl=zh-CN&gl=cn&x='+(a+100)+'&y='+(b+50)+'&z='+(7)+'&s=Galileo';
+			
+			
+			
+			//return 'http://pics.xihubian.com/map/'+z+'/'+a+','+b+'.png';
+			//return 'http://pics.xihubian.com/map/'+z+'/'+a+','+b+'.png';
+			return 'http://cpic2.edushi.com/cn/hz/zh-chs/mappic/png'+z+'/'+a+','+b+'.png'
+		};
+		map.addLayer(layer);
+		new ZoomTip(map,'zoomTip');
+		
+
+		S.one('#mapmove').on('click',function(){
+			var p = map.get('centerPoint');
+			var rx = Math.random();
+			rx= rx>0.5?(rx-0.5)*3000:(-rx*3000);
+			var ry = Math.random();
+			ry= ry>0.5?(ry-0.5)*3000:(-ry*3000);
+			
+			map.center(new Point(p.x+rx,p.y+ry));
+		});
+		S.one('#mapzoomout').on('click',function(){
+			map.__wheelZoom--
+			map.zoom(map.__wheelZoom);
+		});
+		S.one('#mapzoomin').on('click',function(){
+			map.__wheelZoom++;
+			map.zoom(map.__wheelZoom);
+		});
+		var w = 500,h=300;
+		S.one('#mapresize').on('click',function(){
+			if(w>=1000){
+				w-=500;
+				h-=300;
+			}else{
+				w+=500;
+				h+=300;
+			}
+			map.resize(w,h);
+		});
+		
+		map.resize(S.DOM.viewportWidth(),S.DOM.viewportHeight()-60);
+	});
+
+	
+</script>
+</html>

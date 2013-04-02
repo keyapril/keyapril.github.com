@@ -1,5 +1,5 @@
 body {
-  background: #eee;
+  background:url('../img/bg.png') repeat 0 0;
 }
 
 ul li {
@@ -7,100 +7,183 @@ ul li {
 }
 .header {
 	width: 900px;
-	margin: 0px auto;
-	padding: 30px 0;
+	margin: 0 auto;
+	padding: 150px 0 10px;
+  background: url('../img/header.png') no-repeat 248px 21px;
+  height: 45px;
 }
-.header #txtWeiBoUrl{
-	vertical-align: middle;
-	margin: 0;
-	width: 780px;
+.header .btn{
+  text-decoration:none;
 }
-
-.header #btnParseUrl{
-	vertical-align: middle;
-	margin-left: 15px;
-	text-decoration:none;
+.header .header-op{
+  height: 45px;
 }
-
-#go {
-  width: 200px;
-  height: 50px;
-  display: block;
-  margin: 0 auto;
-  font-size: 22px;
-  border: none;
-  background: none;
-  color: #999;
+.header td{
+  text-align: center;
+  width: 20%;
 }
-
-#container {
+.header table{
+  width: 100%
+}
+.container {
   width: 900px;
   margin: 10px auto;
   position: relative;
+  overflow: hidden;
+  zoom: 1;
 }
-#balls {
+
+.animate-balls{
+  position: absolute;
+  width: 306px;
+  height: 306px;
+  text-align: center;
+  left: 297px;
+  top: 47px;
+  color: #fff;
+  border-radius: 153px;
+  overflow: hidden; 
+  background-color: #ce1b62;
+  z-index: 9999999;
+}
+.animate-balls .bd{
+  width: 216px;
+  height: 246px;
+  border-radius: 153px;
+  overflow: hidden;
+  position: absolute;
+  top: 45px;
+  left: 45px;
+
+}
+.animate-balls ul{
+  position: absolute;
+  left: 0;
+  top: -50px;
+  width: 612px;
+}
+
+.animate-balls li{
+  width: 306px;
+  height: 306px;
+  float: left;
+  z-index: 0;
+  position: static !important;
+}
+.animate-balls li div{
+  width: 306px;
+  height: 306px;
+}
+.animate-balls li div img{
+  width: 160px;
+  height: 160px;
+  border-radius: 80px;
+}
+.animate-balls li div h3{
+  color: #fff;
+}
+.animate-balls li div p{
+  font-size: 16px
+}
+
+
+.balls {
   padding: 0;
   margin: 0;
   list-style: none;
   height: 400px;
+  background:url('../img/together.png') no-repeat 579px 246px;
 }
 
-#balls li,
-#lucky-balls li {
+.balls li{
+  left: 430px;
+  top: -75px;
   position: absolute;
-  left: 420px;
-  top: 470px;
-  padding: 0;
   width: 50px;
   height: 50px;
-  overflow: hidden;
-  font-size: 16px;
-  background: #333;
-  color: #ddd;
-  opacity: .5;
+  border-radius: 25px;
+  overflow: hidden; 
+  background-color: #ce1b62;
+}
+
+.lucky-balls li div,.balls li div{
+  position: absolute;
+  width: 306px;
+  height: 306px;
   text-align: center;
-  line-height: 50px;
-  border-radius: 30px;
-  word-break: keep-all;
-  cursor: pointer;
-}
-
-
-
-#balls li.selected {
+  left: -128px;
+  top: -77px;
   color: #fff;
-  background: #f60;
-  font-size: 50px;
-  height: 200px;
-  width: 200px;
-  line-height: 100px;
-  border-radius: 100px;
-  -webkit-transition: 0.3s ease-in;
-  -webkit-transition-property: width, height, font;
-  z-index: 100;
-}
-#balls li.selected p{
-	line-height: 28px;
-	font-size: 28px;
-}
-#lucky-balls {
-  padding: 20px;
-  margin: 10px 0;
-  list-style: none;
 }
 
-#lucky-balls li {
+.lucky-balls li div img,.balls li div img{
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+  border:5px solid #9d174c;
+}
+
+.balls li div h3{
+  color: #fff;
+}
+
+.balls li div p,.lucky-balls li div p{
+  font-size: 16px
+}
+
+
+.balls li.selected {
+  height: 306px;
+  width: 306px;
+  border-radius: 153px;
+  -webkit-transition: 0.3s ease-in;
+  -webkit-transition-property: width, height;
+  z-index: 99999 !important;
+}
+.balls li.selected div{
+  left: 0px;
+  top: 0px;
+  -webkit-transition: 0.3s ease-in;
+  -webkit-transition-property: left, top;
+}
+.balls li.selected div img{
+  width: 160px;
+  height: 160px;
+  border-radius: 80px;
+  -webkit-transition: 0.3s ease-in;
+  -webkit-transition-property: width, height;
+}
+
+
+
+
+
+
+
+.lucky-balls {
+  overflow: hidden;
+  min-height:110px;
+  padding: 0 20px;
+}
+
+.lucky-balls li {
   position: relative;
+  float: left;
+  width: 86px !important;
+  height: 110px !important;
   left: auto !important;
   top: auto !important;
-  width: 50px !important;
-  height: 50px !important;
-  float: left;
-  margin: 5px 10px;
-  font-weight: bold;
-  color: #fff;
-  background: #f60;
+  overflow: hidden;
 }
+.lucky-balls li div{
+  left: 0px;
+  top: 0px;
+  color: #000;
+  width: 86px;
+  height: 110px;
+}
+
+.h2{color: #e084a0}
 
 
 #wb_connect_btn{
