@@ -1,13 +1,15 @@
 KISSY.add("components/header/index", function(S, Brick, users, setting, localStorage, JSON) {
-    function Header() {
-        Header.superclass.constructor.apply(this, arguments);
-    }
-    Header.ATTRS = {
-        data: {
-            value: setting
-        }
-    }
-    Header.EVENTS = {
+    var TMPL = '@TEMPLATE|'+Brix.absoluteFilePath(this,'index.html')+'|TEMPLATE@';
+    return Brick.extend({},{
+        ATTRS : {
+            tmpl:{
+                value:TMPL
+            },
+            data: {
+                value: setting
+            }
+        },
+        EVENTS : {
         '.btn': {
             click: function(e) {
                 var self = this;
@@ -61,15 +63,10 @@ KISSY.add("components/header/index", function(S, Brick, users, setting, localSto
                     }, config.lottery_Interval * 1000);
                 }
             }
-        },
-    }
-    S.extend(Header, Brick, {
-        initialize: function() {
-            //Luck.init(users);
-            //Luck._start();
         }
-    });
-    return Header;
+    }
+    },'Header');
+
 }, {
     requires: ["brix/core/brick", "components/users/index", "components/setting/index", "gallery/local-storage/1.0/", "json"]
 });

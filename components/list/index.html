@@ -1,0 +1,30 @@
+{{#defaultConfig}}
+    <div class="container">
+            <h2 class="h2">{{name}}</h2>
+            <ul id="lucky-balls" class="lucky-balls">
+            {{#luckyUsers}}
+                <li>
+                <div>
+                    <img src="{{avatar_large}}">
+                    <p>({{name}})</p>
+                </div>
+                </li>
+            {{/luckyUsers}}
+            </ul>
+        </div>
+{{/defaultConfig}}
+{{#config}}
+    <div class="container">
+        <h2 class="h2">{{name}}</h2>
+        <ul id="lucky-balls{{index}}" class="lucky-balls">
+        {{#luckyUsers}}
+            <li>
+            <div>
+                <img src="{{avatar_large}}">
+                <p>({{name}})</p>
+            </div>
+            </li>
+        {{/luckyUsers}}
+        </ul>
+    </div>
+{{/config}}

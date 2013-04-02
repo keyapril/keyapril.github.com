@@ -711,6 +711,5 @@ KISSY.add('components/users/index', function(S, localStorage, JSON) {
     }].sort(function() {
         return Math.random() > 0.5;
     });
-    S.log(users.length);
     return users;
 });

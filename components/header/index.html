@@ -1,0 +1,11 @@
+<div class="header-op" bx-tmpl="header" bx-datakey="config">
+    <table>
+        <tr>
+            {{#config}}
+            <td>
+                <a id="btn{{index}}" class="btn btn-red btn-xlarge {{^num}}btn-disabled{{/num}}">{{name}}{{#num}}({{num}}){{/num}}</a>
+            </td>
+            {{/config}}
+        </tr>
+    </table>
+</div>

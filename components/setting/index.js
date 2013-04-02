@@ -55,21 +55,21 @@ KISSY.add('components/setting/index', function(S, users, localStorage, JSON) {
     };
     var defaultConfig = setting.defaultConfig;
     var luckyUsers = localStorage.getItem('luckyUsers');
-    if(luckyUsers){
+    if (luckyUsers) {
         defaultConfig.luckyUsers = JSON.parse(luckyUsers);
     }
-    
+
 
     S.each(setting.config, function(o) {
         luckyUsers = localStorage.getItem('luckyUsers' + o.index);
-        if(luckyUsers) {
+        if (luckyUsers) {
             o.luckyUsers = JSON.parse(luckyUsers);
         }
         S.each(o.luckyUsers, function(u1) {
             S.each(users, function(u2, i) {
-                if(u2.name == u1.name) {
+                if (u2.name == u1.name) {
                     o.num -= 1;
-                    if(o.num < 1) {
+                    if (o.num < 1) {
                         o.num = false;
                     }
                     users.splice(i, 1);

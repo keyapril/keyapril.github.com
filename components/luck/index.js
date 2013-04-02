@@ -1,193 +1,48 @@
-KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
-    //初始化的图像坐标
-    var POINTS = [{
-        x: 100,
-        y: 50
-    }, {
-        x: 100,
-        y: 100
-    }, {
-        x: 100,
-        y: 150
-    }, {
-        x: 100,
-        y: 200
-    }, {
-        x: 100,
-        y: 250
-    }, {
-        x: 125,
-        y: 300
-    }, {
-        x: 175,
-        y: 315
-    }, {
-        x: 225,
-        y: 315
-    }, {
-        x: 275,
-        y: 300
-    }, {
-        x: 300,
-        y: 250
-    }, {
-        x: 300,
-        y: 200
-    }, {
-        x: 300,
-        y: 150
-    }, {
-        x: 300,
-        y: 100
-    }, {
-        x: 300,
-        y: 50
-    }
-    //大U
-    ,
-    {
-        x: 50,
-        y: 50
-    }, {
-        x: 50,
-        y: 100
-    }, {
-        x: 50,
-        y: 150
-    }, {
-        x: 50,
-        y: 200
-    }, {
-        x: 50,
-        y: 250
-    }, {
-        x: 60,
-        y: 308
-    }, {
-        x: 100,
-        y: 350
-    }, {
-        x: 150,
-        y: 370
-    }, {
-        x: 200,
-        y: 375
-    }, {
-        x: 250,
-        y: 370
-    }, {
-        x: 300,
-        y: 350
-    }, {
-        x: 340,
-        y: 308
-    }, {
-        x: 350,
-        y: 250
-    }, {
-        x: 350,
-        y: 200
-    }, {
-        x: 350,
-        y: 150
-    }, {
-        x: 350,
-        y: 100
-    }, {
-        x: 350,
-        y: 50
-    }
-    //X的\
-    ,
-    {
-        x: 450,
-        y: 50
-    }, {
-        x: 500,
-        y: 100
-    }, {
-        x: 550,
-        y: 150
-    }, {
-        x: 600,
-        y: 200
-    }, {
-        x: 650,
-        y: 250
-    }, {
-        x: 700,
-        y: 300
-    }, {
-        x: 750,
-        y: 350
-    }, {
-        x: 500,
-        y: 50
-    }, {
-        x: 550,
-        y: 100
-    }, {
-        x: 600,
-        y: 150
-    }, {
-        x: 650,
-        y: 200
-    }, {
-        x: 700,
-        y: 250
-    }, {
-        x: 750,
-        y: 300
-    }, {
-        x: 800,
-        y: 350
-    }
-    //X的/
-    ,
-    {
-        x: 750,
-        y: 50
-    }, {
-        x: 700,
-        y: 100
-    }, {
-        x: 650,
-        y: 150
-    }, {
-        x: 600,
-        y: 200
-    }, {
-        x: 550,
-        y: 250
-    }, {
-        x: 500,
-        y: 300
-    }, {
-        x: 450,
-        y: 350
-    }, {
-        x: 800,
-        y: 50
-    }, {
-        x: 750,
-        y: 100
-    }, {
-        x: 700,
-        y: 150
-    }, {
-        x: 650,
-        y: 200
-    }, {
-        x: 600,
-        y: 250
-    }, {
-        x: 550,
-        y: 300
-    }, {
-        x: 500,
-        y: 350
-    }];
+KISSY.add('components/luck/index', function(S, Node, Brick, POINTS, USERS, SETTING) {
+    var TMPL = '@TEMPLATE|' + Brix.absoluteFilePath(this, 'index.html') + '|TEMPLATE@';
     var $ = Node.all;
+    // Helpers
+
+    function r(from, to) {
+        from = from || 0;
+        to = to || 1;
+        return Math.floor(Math.random() * (to - from + 1) + from);
+    }
+
+    function getOffset(a, b) {
+        return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+    }
+
+    function isOverlap(a, b) {
+        return getOffset(a, b) <= (a.width + b.width) / 2;
+    }
+
+    function hit(a, b) {
+        var yOffset = b.y - a.y;
+        var xOffset = b.x - a.x;
+
+        var offset = getOffset(a, b);
+
+        var power = Math.ceil(((a.width + b.width) / 2 - offset) / RIGIDITY);
+        var yStep = yOffset > 0 ? Math.ceil(power * yOffset / offset) : Math.floor(power * yOffset / offset);
+        var xStep = xOffset > 0 ? Math.ceil(power * xOffset / offset) : Math.floor(power * xOffset / offset);
+
+        if (a.lucky) {
+            b._xMove += xStep * 2;
+            b._yMove += yStep * 2;
+        } else if (b.lucky) {
+            a._xMove += xStep * -2;
+            a._yMove += yStep * -2;
+        } else {
+            a._yMove += -2 * yStep;
+            b._yMove += yStep;
+
+            a._xMove += -2 * xStep;
+            b._xMove += xStep;
+        }
+    }
+
+
     var CANVAS_HEIGHT = 400;
     var CANVAS_WIDTH = 900;
 
@@ -204,7 +59,7 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
 
     var RIGIDITY = 4; // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
 
-    function User(el,options, i) {
+    function User(el, options, i) {
         this.options = options;
         this.left = 430;
         this.top = -75;
@@ -217,7 +72,7 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
         this.zooming = false;
         this.el = el;
         var p = POINTS[i];
-        if(p) {
+        if (p) {
             this.left = p.x;
             this.top = p.y - 30; //数据问题，所以做了这个兼容处理
         }
@@ -265,7 +120,7 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
 
     User.prototype.autoMove = function() {
         var that = this;
-        if(this.moving) {
+        if (this.moving) {
             this.move(function() {
                 that.autoMove();
             });
@@ -279,10 +134,9 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
 
     User.prototype.bang = function() {
         var that = this;
-
         this.lucky = true;
         this.el.addClass('selected');
-        this.el.one('h3').html(setting.name);
+        this.el.one('h3').html(SETTING.name);
         this.left = (CANVAS_WIDTH - LUCKY_BALL_WIDTH) / 2;
         this.top = (CANVAS_HEIGHT - LUCKY_BALL_HEIGHT) / 2;
         this.width = LUCKY_BALL_WIDTH;
@@ -312,73 +166,15 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
         this.reflow(null, false);
     }
 
-
-
-    // Helpers
-
-    function r(from, to) {
-        from = from || 0;
-        to = to || 1;
-        return Math.floor(Math.random() * (to - from + 1) + from);
-    }
-
-    function getOffset(a, b) {
-        return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-    }
-
-    function isOverlap(a, b) {
-        return getOffset(a, b) <= (a.width + b.width) / 2;
-    }
-
-    function hit(a, b) {
-        var yOffset = b.y - a.y;
-        var xOffset = b.x - a.x;
-
-        var offset = getOffset(a, b);
-
-        var power = Math.ceil(((a.width + b.width) / 2 - offset) / RIGIDITY);
-        var yStep = yOffset > 0 ? Math.ceil(power * yOffset / offset) : Math.floor(power * yOffset / offset);
-        var xStep = xOffset > 0 ? Math.ceil(power * xOffset / offset) : Math.floor(power * xOffset / offset);
-
-        if(a.lucky) {
-            b._xMove += xStep * 2;
-            b._yMove += yStep * 2;
-        } else if(b.lucky) {
-            a._xMove += xStep * -2;
-            a._yMove += yStep * -2;
-        } else {
-            a._yMove += -2 * yStep;
-            b._yMove += yStep;
-
-            a._xMove += -2 * xStep;
-            b._xMove += xStep;
-        }
-    }
-
-    function Luck() {
-        Luck.superclass.constructor.apply(this, arguments);
-    }
-    Luck.ATTRS = {
-        data:{
-            value:{users:users}
-        }
-    };
-
-    S.extend(Luck, Brick, {
-        initialize: function() {
+    return Brick.extend({
+        bindUI: function() {
             var self = this;
-            // if(self.users.length > 0) {
-            //     self.stop();
-            // }
-            // $('.balls').empty();
-            // $('.lucky-balls').empty();
-            // self.users = [];
             self.luckyUser = null;
             var balls = $('.balls').all('li');
             var users = self.get('data').users;
-            balls.each(function(el,i){
+            balls.each(function(el, i) {
                 S.later(function() {
-                    self.users.push(new User(el,users[i], i));
+                    self.users.push(new User(el, users[i], i));
                 }, r(DURATION_MIN, DURATION_MAX));
             })
             S.each(self.get('users'), function(o, i) {
@@ -388,9 +184,9 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
             });
         },
         users: [],
-        i:0,
+        i: 0,
         init: function(data) {
-            
+
         },
         start: function() {
             this.timer && clearTimeout(this.timer);
@@ -399,30 +195,31 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
             })
             //this._start();
         },
-        _start:function(){
+        _start: function() {
             var self = this;
             var ul = $('.animate-balls').one('ul');
             ul.animate({
-            'left': -306
-            }, 0.2, 'easeNone', function(){
+                'left': -306
+            }, 0.2, 'easeNone', function() {
                 //self.stop();
                 ul.one('li').appendTo('.balls');
-                ul.css({left:0});
+                ul.css({
+                    left: 0
+                });
                 var el = self.users[self.i].el;
-                el.attr('style','');
+                el.attr('style', '');
                 el.appendTo(ul);
                 self._start();
-                if(self.i<self.users.length-1){
-                    self.i+=1;
-                }
-                else{
+                if (self.i < self.users.length - 1) {
+                    self.i += 1;
+                } else {
                     self.i = 0;
                 }
             });
         },
         stop: function() {
             var users = this.users;
-            if(users.length < 1) {
+            if (users.length < 1) {
                 return;
             }
             var z = 0,
@@ -430,7 +227,7 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
 
             users.forEach(function(user) {
                 user.stop();
-                if(z < user.zIndex) {
+                if (z < user.zIndex) {
                     lucky = user;
                     z = user.zIndex;
                 }
@@ -440,20 +237,20 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
             this.luckyUser = lucky;
         },
         removeItem: function(item) {
-            for(var i = 0; i < this.users.length; i++) {
+            for (var i = 0; i < this.users.length; i++) {
                 var user = this.users[i];
-                if(user === item) {
+                if (user === item) {
                     this.users.splice(i, 1);
                 }
             }
         },
         moveLucky: function() {
             var luckyUser = this.luckyUser;
-            if(luckyUser) {
+            if (luckyUser) {
                 luckyUser.el.removeClass('selected');
                 luckyUser.el.one('p').remove();
                 luckyUser.el.one('h3').remove();
-                luckyUser.el.prependTo('#lucky-balls,#lucky-balls' + setting.index);
+                luckyUser.el.prependTo('#lucky-balls,#lucky-balls' + SETTING.index);
                 this.removeItem(luckyUser);
                 this.luckyUser = null;
             }
@@ -467,9 +264,9 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
                 user.beginHit();
             })
 
-            for(var i = 0; i < users.length; i++) {
-                for(var j = i + 1; j < users.length; j++) {
-                    if(isOverlap(users[i], users[j])) {
+            for (var i = 0; i < users.length; i++) {
+                for (var j = i + 1; j < users.length; j++) {
+                    if (isOverlap(users[i], users[j])) {
                         hit(users[i], users[j]);
                         hitCount++;
                     }
@@ -480,14 +277,25 @@ KISSY.add('components/luck/index', function(S, Node,Brick,users,setting) {
                 user.hitMove();
             })
 
-            if(hitCount > 0) {
+            if (hitCount > 0) {
                 this.timer = setTimeout(function() {
                     that.hit();
                 }, 500)
             }
         }
-    });
-    return Luck;
+    }, {
+        ATTRS: {
+            tmpl: {
+                value: TMPL
+            },
+            data: {
+                value: {
+                    users: USERS
+                }
+            }
+        }
+    }, 'Luck');
+
 }, {
-    requires: ['node',"brix/core/brick","components/users/index","components/setting/index"]
+    requires: ['node', 'brix/core/brick', 'components/points/index', 'components/users/index', 'components/setting/index']
 });

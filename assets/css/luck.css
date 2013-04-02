@@ -2,9 +2,6 @@ body {
   background:url('../img/bg.png') repeat 0 0;
 }
 
-ul li {
-  list-style: none;
-}
 .header {
 	width: 900px;
 	margin: 0 auto;

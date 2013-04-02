@@ -1,29 +1,24 @@
-KISSY.add("components/list/index", function(S, Brick,setting, localStorage) {
-    function List() {
-        List.superclass.constructor.apply(this, arguments);
-    }
-    List.ATTRS = {
-        data:{
-            value:setting
-        }
-    }
-    List.DOCEVENTS = {
-        '': {
-            'keydown': function(e) {
-                //console.log(e.ctrlKey);
-                if(e.ctrlKey && e.keyCode == 46) {
-                    S.log(1);
-                    localStorage.clear();
+KISSY.add("components/list/index", function(S, Brick, SETTING, localStorage) {
+    var TMPL = '@TEMPLATE|' + Brix.absoluteFilePath(this, 'index.html') + '|TEMPLATE@';
+    return Brick.extend({}, {
+        ATTRS: {
+            tmpl: {
+                value: TMPL
+            },
+            data: {
+                value: SETTING
+            }
+        },
+        DOCEVENTS: {
+            '': {
+                'keydown': function(e) {
+                    if (e.ctrlKey && e.keyCode == 46) {
+                        localStorage.clear();
+                    }
                 }
             }
         }
-    }
-    S.extend(List, Brick, {
-        initialize: function() {
-
-        }
     });
-    return List;
 }, {
-    requires: ["brix/core/brick","components/setting/index", "gallery/local-storage/1.0/"]
+    requires: ["brix/core/brick", "components/setting/index", "gallery/local-storage/1.0/"]
 });
