@@ -4,9 +4,27 @@ layout: ux
 ---
 <div class="header" bx-name="header" bx-path="components/header/">
 </div>
+<style type="text/css">
+	.loading{
+		display: inline-block;
+	}
+	.loading-color-mini {
+	  width: 30px;
+	  height: 12px;
+	  background: url(http://img04.taobaocdn.com/tps/i4/T1h7YDXdddXXcntf6c-30-12.gif) no-repeat;
+	}
+</style>
+<div id="loading" style="text-align:center"><span class="loading loading-color-mini"></span></div>
 <div class="container">
     <ul id="balls" class="balls" bx-name="luck" bx-path="components/luck/">
     </ul>
 </div>
 <div bx-name="list" bx-path="components/list/">
 </div>
+<script>
+	Brix.ready(function(){
+		Brix.pagelet.ready(function(){
+			KISSY.all('#loading').css('display','none')
+		})
+	})
+</script>
