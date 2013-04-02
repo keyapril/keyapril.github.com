@@ -297,5 +297,5 @@ KISSY.add('components/luck/index', function(S, Node, Brick, POINTS, USERS, SETTI
     }, 'Luck');
 
 }, {
-    requires: ['node', 'brix/core/brick', 'components/points/index', 'components/users/index', 'components/setting/index']
+    requires: ['node', 'brix/core/brick', 'components/points/index', 'components/users/index', 'components/setting/index','./index.css']
 });
