@@ -36,11 +36,6 @@ footer{ position: fixed; bottom: 0; background: url('/assets/img/footer.png') re
 
 footer nav{ position: absolute; right: 0px; top: 40px; z-index: 1; }
 footer nav li{ list-style-type: none; display: inline-block; color: #fff; font-size: 16px; margin: 0 15px; }
-footer nav li a{ color: #fff; cursor: pointer; }
-footer nav li a.about:hover, footer nav li a.aboutActive{ color: #0087a0 !important; }
-footer nav li a.works_clients:hover, footer nav li a.works_clientsActive{ color: #f3b867 !important; }
-footer nav li a.blog:hover, #intro footer nav li a.blogActive{ color: #ce5745 !important; }
-footer nav li a.feed:hover, #intro footer nav li a.feedActive{ color: #ce5745 !important; }
-footer nav li a.contact:hover, footer nav li a.contactActive{ color: #333 !important; }
+
 footer nav li:first-child{ margin-left: 0; }
 footer nav li:last-child{ margin-right: 0; }
