@@ -5,7 +5,7 @@ tagline: Supporting tagline
 ---
 {% include JB/setup %}
 
-天空一声巨响，左莫莫右莫莫的开博了！！！！
+天空一声巨响，左莫莫右莫莫开博了！！！！
 
 <ul class="posts">
   {% for post in site.posts %}
