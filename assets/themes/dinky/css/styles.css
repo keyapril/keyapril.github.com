@@ -292,11 +292,7 @@ a.buttons {
 	height: 30px;
 }
 
-header li.github a{
-	background-image: url(../images/octocat-small.png);
-  background-position: 3px 5px;
-  background-repeat: no-repeat;
-}
+
 
 header li a{
   display: block;
@@ -308,6 +304,13 @@ header li a{
 header li a:hover {
 	text-decoration: none;
 }
+
+header li.github a{
+  background-image: url(../images/octocat-small.png);
+  background-position: 3px 5px;
+  background-repeat: no-repeat;
+}
+
 
 header .vcard h4{
   color: #fff;
@@ -341,7 +344,7 @@ footer {
   
   header, section, footer {
     float:none;
-    position:static;
+    position:relative;
     width:auto;
   }
 
@@ -363,9 +366,13 @@ footer {
   }
   
   header ul {
-    position:absolute;
-    right:130px;
-    top:84px;
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    width: 315px;
+  }
+  header ul li{
+    float: left;
   }
 
   header .vcard {
