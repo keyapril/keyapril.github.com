@@ -327,12 +327,13 @@ section {
 /* Footer */
 
 footer {
-  float: right;
-  position:static;
-	padding-left: 50px;
+  clear: both;
   border-top: 1px solid #ccc;
-  margin:0 84px 0 50px;
-  padding:0;
+  margin:0 0 0 237px;
+}
+
+footer p{
+  text-align: center;
 }
 
 @media print, screen and (max-width: 960px) {
@@ -342,7 +343,7 @@ footer {
     margin:0;
   }
   
-  header, section, footer {
+  header, section {
     float:none;
     position:relative;
     width:auto;
