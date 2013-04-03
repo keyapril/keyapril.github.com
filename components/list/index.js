@@ -1,6 +1,7 @@
 KISSY.add("components/list/index", function(S, Brick, SETTING, localStorage) {
     var TMPL = '@TEMPLATE|' + Brix.absoluteFilePath(this, 'index.html') + '|TEMPLATE@';
-    return Brick.extend({}, {
+    return Brick.extend({
+    }, {
         ATTRS: {
             tmpl: {
                 value: TMPL
