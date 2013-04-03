@@ -22,17 +22,10 @@ title: 抽奖
 	  background: url(http://img04.taobaocdn.com/tps/i4/T1h7YDXdddXXcntf6c-30-12.gif) no-repeat;
 	}
 </style>
-<div id="loading" style="text-align:center"><span class="loading loading-color-mini"></span></div>
+<div bx-name="loading" bx-path="components/loading/" id="loading" style="text-align:center"><span class="loading loading-color-mini"></span></div>
 <div class="container">
     <ul id="balls" class="balls" bx-name="luck" bx-path="components/luck/">
     </ul>
 </div>
 <div bx-name="list" bx-path="components/list/">
 </div>
-<script>
-	Brix.ready(function(){
-		Brix.pagelet.ready(function(){
-			KISSY.all('#loading').css('display','none')
-		})
-	})
-</script>
